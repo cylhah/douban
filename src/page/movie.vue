@@ -4,27 +4,23 @@
             <top></top>
         </div>
         <div>
-
+            <movie-nav></movie-nav>
         </div>
     </div>
 </template>
 
 <script>
 import top from '../components/top.vue'
+import movieNav from '../components/movieNav.vue'
 export default {
     components: {
-        top
+        top,movieNav
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.movie{
-    width: 100%;
-    .topnav{
-        width: 100%;
-    }
-}
+
 </style>
 
 

@@ -65,6 +65,7 @@ $fontColor: rgb(213,213,213);
     visibility: hidden;
 }
 .top{
+    position: relative;
     width: 100%;
     background-color: $bgColor;
     .navbar{
@@ -73,7 +74,7 @@ $fontColor: rgb(213,213,213);
             display: inline-block;
             text-decoration: none;
             font-size: 12px;
-            margin: 7px 10px;
+            margin: 7px 8px;
             &:hover{
                 color: white;
             }
@@ -104,6 +105,11 @@ $fontColor: rgb(213,213,213);
                 }
             }
         }
+    }
+}
+@media screen and (max-width: 1068px){
+    .top{
+        width: 1068px;
     }
 }
 </style>
