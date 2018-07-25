@@ -3,16 +3,26 @@
         <div class="main">
             <div class="searchBox">
                 <div class="title">
-                    <a href="#/movie">豆瓣电影</a>
+                    <a href="#/movie"><img :src="'./static/img/doubandy.png'"></a>
                 </div>
                 <div class="search"> 
-                    <el-input placeholder="请输入内容" v-model="searchText">
-                        <el-button slot="append" icon="el-icon-search"></el-button>
-                    </el-input>
+                    <div class="searchDiv">
+                        <input type="text" placeholder="搜索电影、电视剧、综艺、影人" v-model="searchText">
+                        <div class="searchIcon"><i class="el-icon-search"></i></div>
+                    </div>
                 </div>
             </div>
             <div class="navbar">
-                <nav></nav>
+                <nav class="nav">
+                    <a href="">影讯&amp;购票</a>
+                    <a href="">选电影</a>
+                    <a href="">电视剧</a>
+                    <a href="">排行榜</a>
+                    <a href="">分类</a>
+                    <a href="">影评</a>
+                    <a href="">2017年度榜单</a>
+                    <a href="">2017观影报告</a>
+                </nav>
             </div>
         </div>
     </div>
@@ -35,6 +45,14 @@ $titleColor: rgb(55,150,209);
     width: 100%;
     background-color: $bgColor;
 }
+.movieNav::after{
+    content: '';
+    width: 98%;
+    position: absolute;
+    border-bottom: 1px solid rgb(231, 235, 236);
+    top: 100px;
+    left: 1%;
+}
 .main{
     position: relative;
     margin: 0 auto;
@@ -42,24 +60,56 @@ $titleColor: rgb(55,150,209);
 }
 .searchBox{
     display: flex;
-    padding: 20px 0;
+    padding: 15px 0;
 }
 .title{
-    a{
-        text-decoration: none;
-        color: $titleColor;
-        font-size: 30px;
-        font-weight: bolder;
-    }
+    padding-top: 6px;
 }
 .search{
-    width: 518px;
+    width: 540px;
     position: relative;
-    left: 20px;
+    left: 40px;
+}
+.searchDiv{
+    input{
+        padding: 9px 9px 8px 15px;
+        border: 0px;
+        width: 455px;
+        border-bottom: 1px solid rgb(199, 195, 195);
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+}
+.searchIcon{
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    left: -8px;
+    font-size: 18px;
+    padding: 7px 9px;
+    background: rgb(142, 152, 160);
+    color: white;
+    border-radius: 0 5px 5px 0;
 }
 @media screen and (max-width: 1068px){
     .movieNav{
         width: 1068px;
+    }
+}
+.navbar{
+    margin: 10px 0;
+    padding: 11px 0;
+}
+.nav{
+    a{
+        margin-right:19px;
+        font-size: 15px;
+        text-decoration: none;
+        color: rgb(34, 119, 170);
+        &:hover{
+            background: rgb(34, 119, 170);
+            color: white;
+        }
     }
 }
 </style>

@@ -1,10 +1,13 @@
 <template>
     <div class="movie">
-        <div class="topnav">
+        <div>
             <top></top>
         </div>
         <div>
             <movie-nav></movie-nav>
+        </div>
+        <div class="main">
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -20,7 +23,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.main{
+    position: relative;
+    margin: 0 auto;
+    width: 1068px;
+}
 </style>
 
 

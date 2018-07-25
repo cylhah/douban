@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import movie from '@/page/movie.vue'
+import movieHome from '@/page/movieHome.vue'
 
 Vue.use(Router)
 
@@ -9,7 +10,14 @@ export default new Router({
     {
       path: '/movie',
       name: 'movie',
-      component: movie
+      component: movie,
+      children: [
+        {
+          path: '',
+          name: 'movieHome',
+          component: movieHome
+        }
+      ]
     }
   ]
 })
