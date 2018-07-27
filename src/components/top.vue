@@ -87,6 +87,7 @@ $fontColor: rgb(213,213,213);
     }
     .download{
         position: absolute;
+        z-index: 5;
         right: 30px;
         width: 211px;
         padding: 21px;
