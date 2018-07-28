@@ -14,6 +14,7 @@
             </div>
             <div class="navbar">
                 <nav class="nav">
+                    <a href="">我看</a>
                     <a href="">影讯&amp;购票</a>
                     <a href="">选电影</a>
                     <a href="">电视剧</a>
