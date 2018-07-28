@@ -28,26 +28,6 @@
                             @mouseout="closeDtail">
                                 <img :src="getImageUrl(inTheater[(item-1)*5+n-1].images.large)">
                             </a>
-                            <!-- <div class="movieInfo">
-                                <h4 class="movieTitle">
-                                    {{inTheater[(item-1)*5+n-1].title}} 
-                                    <span>{{inTheater[(item-1)*5+n-1].year}}</span>
-                                </h4>
-                                <p class="movieRate">
-                                    <score-show :score="inTheater[(item-1)*5+n-1].rating.average" class="movieScore"></score-show>
-                                    <span>( 28614人评价)</span>
-                                </p>
-                                <p>
-                                    <span class="time">118分钟</span>
-                                    <span class="contry">中国大陆</span>
-                                </p>
-                                <p>
-                                    <span>导演 {{inTheater[(item-1)*5+n-1].directors[0].name}}</span>
-                                </p>
-                                <p>
-                                    <span>主演 {{getCastsStr(inTheater[(item-1)*5+n-1].casts)}}</span>
-                                </p>
-                            </div> -->
                             <p class="movieName"
                                 @click="gotoMovieUrl">{{getMovieTitle(inTheater[(item-1)*5+n-1].title)}}</p>
                             <score-show :score="inTheater[(item-1)*5+n-1].rating.average"
@@ -59,7 +39,7 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
-        <div class="movieInfo" :style="movieDeatilStyle" v-if="getDetail">
+        <div class="movieInfo" :style="movieDeatilStyle" v-if="getDetail" :class="{showDetail}">
             <h4 class="movieTitle">
                 {{movieDetail.title}} 
                 <span>{{movieDetail.year}}</span>
@@ -95,6 +75,7 @@ export default {
             totalPage: 4,
             loaded: false,
             getDetail: false,
+            showDetail: false,
             carouselObj: {},
             movieDetail: {},
             movieDeatilStyle: {
@@ -109,7 +90,6 @@ export default {
                 this.inTheater = response.data.subjects
                 this.loaded = true
                 this.totalPage = parseInt((this.inTheater.length+4)/5)
-                console.log(this.inTheater)
             })
         },
         getImageUrl(url){
@@ -127,13 +107,14 @@ export default {
         },
         getMovieDeatil(e,movieIndex){
             this.getDetail = true
+            this.showDetail = true
             let el = e.currentTarget.getBoundingClientRect()
             this.movieDetail = this.inTheater[movieIndex]
             this.movieDeatilStyle.left = `${el.left+125}px`
             this.movieDeatilStyle.top = `${el.top-147}px`
         },
         closeDtail(){
-            this.getDetail = false
+            this.showDetail = false
         },
         gotoMovieUrl(){
 
@@ -167,6 +148,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes show {
+    0%{
+        visibility: hidden;
+    }
+    99%{
+        visibility: hidden;
+    }
+    100%{
+        visibility: visible;
+    }
+}
+.showDetail{
+    animation: show 0.5s forwards;
+}
 .inTheater{
     width: 675px;
     margin: 40px 0;
@@ -236,7 +231,7 @@ export default {
     position: fixed;
     padding: 5px 15px 10px 15px;
     text-align: left;
-    visibility: visible;
+    visibility: hidden;
     width: 230px;
     border: 1px solid rgb(219, 211, 211);
     background-color: white;
