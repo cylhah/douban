@@ -18,6 +18,10 @@ export default new Router({
           component: movieHome
         }
       ]
+    },
+    {
+      path: '/movie/detail/:id',
+      name: 'movieDetail'
     }
   ]
 })

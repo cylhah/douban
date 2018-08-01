@@ -23,13 +23,13 @@
                 <el-carousel-item v-for="item in totalPage" :key="item">
                     <div class="movie5">
                         <div v-for="n in 5" :key="n" class="movieDiv" v-if="loaded">
-                            <a href="" class="movieImg"
+                            <a :href="`#/movie/detail${inTheater[(item-1)*5+n-1].id}`" class="movieImg"
                             @mouseover="getMovieDeatil($event,(item-1)*5+n-1)"
                             @mouseout="closeDtail">
                                 <img :src="getImageUrl(inTheater[(item-1)*5+n-1].images.large)">
                             </a>
                             <p class="movieName"
-                                @click="gotoMovieUrl">{{getMovieTitle(inTheater[(item-1)*5+n-1].title)}}</p>
+                                @click="gotoMovieDetail(inTheater[(item-1)*5+n-1].id)">{{getMovieTitle(inTheater[(item-1)*5+n-1].title)}}</p>
                             <score-show :score="inTheater[(item-1)*5+n-1].rating.average"
                                         class="score" v-if="inTheater[(item-1)*5+n-1].rating.average"></score-show>
                             <p v-else class="noscore">暂无评分</p>
@@ -116,8 +116,8 @@ export default {
         closeDtail(){
             this.showDetail = false
         },
-        gotoMovieUrl(){
-
+        gotoMovieDetail(movieId){
+            window.open(`#/movie/detail/${movieId}`)
         },
         increasePage(){
             this.$refs.carousel.next()
@@ -203,11 +203,6 @@ export default {
 .movie5{
     display: flex;
     justify-content: space-between;
-}
-.screen{
-    position: absolute;
-    height: 270px;
-    width: 2900px;
 }
 .score{
     margin: 0 auto;
