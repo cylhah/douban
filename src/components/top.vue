@@ -18,7 +18,7 @@
                     @mouseout="show = false">下载豆瓣客户端</a>
                 <a href="javascript:void(0)" v-if="user.userName">提醒</a>
                 <a href="javascript:void(0)" v-if="user.userName">豆邮</a>
-                <a href="javascript:void(0)" v-if="user.userName" @focus="showUserMenu = true"
+                <a href="javascript:void(0)" v-if="user.userName" @click="showMenu"
                 @blur="showUserMenu = false">{{user.userName}}的帐号<span>▼</span></a>
                 <a href="javascript:void(0)" v-if="!user.userName" @click="login({userId: 1,userName: '桑生'})">登录</a>
                 <a href="/" v-if="!user.userName">注册</a>
@@ -38,12 +38,12 @@
                 </p>
             </div>
         </div>
-        <div class="userMenu" :class="{visible: showUserMenu}">
-            <p><a :href="`#/user/${user.userId}`">个人主页</a></p>
+        <div class="userMenu" v-if="showUserMenu">
+            <p><a :href="`#/user/${user.userId}`" @mousedown="gotoUrl(`#/user/${user.userId}`)">个人主页</a></p>
             <p><a href="">我的订单</a></p>
             <p><a href="">我的钱包</a></p>
             <p><a href="">帐号管理</a></p>
-            <p><a href="javascript:void(0)" @click="logout">退出</a></p>
+            <p><a href="javascript:void(0)" @mousedown="logout">退出</a></p>
         </div>
     </div>
 </template>
@@ -73,9 +73,15 @@ export default {
             this.user.userId = undefined
             this.user.userName = ''
         },
+        showMenu(){
+            this.showUserMenu = !this.showUserMenu
+        },
         initUser(){
             this.user.userId = this.getCookie('userId')
             this.user.userName = this.getCookie('userName')
+        },
+        gotoUrl(url){
+            window.open(url)
         },  
         setCookie(key,value,days){
             let exdate = new Date()
@@ -115,9 +121,6 @@ $fontColor: rgb(213,213,213);
 }
 .userMenu{
     position: absolute;
-    visibility: hidden;
-    transition-property: visibility;
-    transition-duration: 0.5s;
     z-index: 5;
     right: 0;
     background: white;
