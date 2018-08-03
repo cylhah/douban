@@ -299,7 +299,7 @@ $blue:#2277aa;
             justify-content: space-between;
             div{
                 margin: 0;
-                width: 60px;
+                width: 40px;
                 text-align: center;
             }
             a{

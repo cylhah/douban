@@ -16,8 +16,12 @@
                 <a href="https://www.douban.com/doubanapp/frodo?channel=top-nav&referer=https%3A%2F%2Fmovie.douban.com%2Fsubject%2F25849049%2F%3Ffrom%3Dshowing&wechat=0&os=Windows+7"
                     @mouseover="show = true;start = false"
                     @mouseout="show = false">下载豆瓣客户端</a>
-                <a href="/">登录</a>
-                <a href="/">注册</a>
+                <a href="javascript:void(0)" v-if="user.userName">提醒</a>
+                <a href="javascript:void(0)" v-if="user.userName">豆邮</a>
+                <a href="javascript:void(0)" v-if="user.userName" @focus="showUserMenu = true"
+                @blur="showUserMenu = false">{{user.userName}}的帐号<span>▼</span></a>
+                <a href="javascript:void(0)" v-if="!user.userName" @click="login({userId: 1,userName: '桑生'})">登录</a>
+                <a href="/" v-if="!user.userName">注册</a>
             </div>
         </nav>
         <div class="download" @mouseover="show = true;start = false" 
@@ -34,6 +38,13 @@
                 </p>
             </div>
         </div>
+        <div class="userMenu" :class="{visible: showUserMenu}">
+            <p><a :href="`#/user/${user.userId}`">个人主页</a></p>
+            <p><a href="">我的订单</a></p>
+            <p><a href="">我的钱包</a></p>
+            <p><a href="">帐号管理</a></p>
+            <p><a href="javascript:void(0)" @click="logout">退出</a></p>
+        </div>
     </div>
 </template>
 
@@ -42,10 +53,51 @@ export default {
     data(){
         return {
             show: false,
-            start: true
+            start: true,
+            user: {
+                userId: undefined,
+                userName: ''
+            },
+            showUserMenu: false
         }
     },
     methods: {
+        login(user){
+            for(let i in user){
+                this.setCookie(i,user[i],30)
+            }
+        },
+        logout(){
+            this.delCookie('userId','',-1)
+            this.delCookie('userName','',-1)
+            this.user.userId = undefined
+            this.user.userName = ''
+        },
+        initUser(){
+            this.user.userId = this.getCookie('userId')
+            this.user.userName = this.getCookie('userName')
+        },  
+        setCookie(key,value,days){
+            let exdate = new Date()
+            exdate.setDate(exdate.getDate()+days)
+            document.cookie = `${key}=${escape(value)};expires=${exdate.toUTCString()}`
+        },
+        getCookie(key){
+            let reg = new RegExp("(^| )"+key+"=([^;]*)(;|$)")
+            let arr = document.cookie.match(reg)
+            if(arr){
+                return unescape(arr[2])
+            }
+            else {
+                return ''
+            }
+        },
+        delCookie(key){
+            this.setCookie(key,'',-1)
+        }
+    },
+    created(){
+        this.initUser()
     }
 }
 </script>
@@ -61,8 +113,33 @@ $fontColor: rgb(213,213,213);
 .close{
     animation: close 0.5s forwards;
 }
+.userMenu{
+    position: absolute;
+    visibility: hidden;
+    transition-property: visibility;
+    transition-duration: 0.5s;
+    z-index: 5;
+    right: 0;
+    background: white;
+    border: 1px solid rgb(223, 219, 219);
+    p{
+        margin: 7px 0;
+        padding: 0 20px 5px 20px;
+        &:hover{
+            background: rgb(246, 246, 246);
+        }
+        a{
+            text-decoration: none;
+            color: #3d3d3d;
+            font-size: 13px;
+        }
+    }
+}
 .invisible{
     visibility: hidden;
+}
+.visible{
+    visibility: visible;
 }
 .top{
     position: relative;
@@ -77,6 +154,9 @@ $fontColor: rgb(213,213,213);
             margin: 7px 8px;
             &:hover{
                 color: white;
+            }
+            span{
+                font-size: 8px;
             }
         }
         .navright{
