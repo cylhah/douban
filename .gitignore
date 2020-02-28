@@ -1,0 +1,15 @@
+/node_modules
+/dist
+/release
+/engine
+/template
+/package-lock.json
+/yarn.lock
+/.idea
+/.vscode
+/.history
+
+*.DS_Store
+
+/src/css/sprite.less
+/src/assets/sprite
